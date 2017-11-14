@@ -1,0 +1,74 @@
+
+<html>
+<head>
+  <meta charset="ISO-8859-1">
+	<title></title>
+
+
+	<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+	<script type="text/javascript" src="vendor/dombars.min.js"></script>
+	<script type="text/javascript" src="vendor/dombars.min.js"></script>
+
+</head>
+<body>
+<script>
+
+
+function statusChangeCallback(response) {
+
+    if (response.status === 'connected') {
+window.location.replace("index.html");
+
+    } else {
+
+    }
+}
+
+function checkLoginState() {
+    FB.getLoginStatus(function(response) {
+        statusChangeCallback(response);
+    });
+}
+
+
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '300573130420217',
+      cookie 	 : true,
+      xfbml      : true,
+      version    : 'v2.10'
+    });
+    FB.AppEvents.logPageView();
+    FB.getLoginStatus(function(response) {
+        statusChangeCallback(response);
+    });
+  };
+
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+
+
+
+</script>
+
+
+<div
+  class="fb-like"
+  data-share="true"
+  data-width="450"
+  data-show-faces="true">
+</div>
+<div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>
+
+
+
+
+</body>
+
+</html>

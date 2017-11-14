@@ -1,0 +1,402 @@
+
+<html>
+<head>
+  <meta charset="ISO-8859-1">
+	<title></title>
+
+<link rel="stylesheet" type="text/css" href="all.css" media="screen" />
+	<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+	<script type="text/javascript" src="vendor/dombars.min.js"></script>
+	<script type="text/javascript" src="vendor/dombars.min.js"></script>
+
+</head>
+<body>
+<script>
+
+
+function statusChangeCallback(response) {
+
+    if (response.status === 'connected') {
+        // Logged into your app and Facebook.
+        alert("conectado");
+
+    } else {
+        alert("Inicie sesión con Facebook para usar esta app");
+window.location.replace("index3.html");
+	
+    }
+}
+
+function checkLoginState() {
+    FB.getLoginStatus(function(response) {
+        statusChangeCallback(response);
+    });
+}
+
+
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '300573130420217',
+      cookie 	 : true,
+      xfbml      : true,
+      version    : 'v2.10'
+    });
+    FB.AppEvents.logPageView();
+    FB.getLoginStatus(function(response) {
+        statusChangeCallback(response);
+    });
+  };
+
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+
+
+
+</script>
+
+
+<div
+  class="fb-like"
+  data-share="true"
+  data-width="450"
+  data-show-faces="true">
+</div>
+<div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>
+
+
+
+
+		<style type="text/css">
+		.clearfix:after {
+		  content: "";
+		  display: table;
+		  clear: both;
+		}
+
+		.quiz {
+			width:746px;
+			font-family: "Helvetica Neue",Arial,Helvetica,sans-serif; 
+		}
+
+		.question:after {
+		  content: "";
+		  display: table;
+		  clear: both;
+		}
+
+		.question h1 {
+			text-align: center;
+			background:#7FD863;
+			font-size: 50px; 
+			font-weight:bold; 
+			padding:10px 0px;
+			font-family: "Helvetica Neue",Arial,Helvetica,sans-serif; 
+			color:#FFF;
+			text-shadow: 2px 2px 2px #000;
+
+		}
+
+
+		.answers {
+			margin-left: -15px;
+		}
+
+		.answer {
+			width:365px;
+			min-height:150px;
+			float:left;
+			background:#DDD;
+			margin:0px 0px 10px 15px;
+			color:#FFF;
+			box-shadow: 1px 1px 1px #AAA;
+		}
+
+		.answer:hover {
+			background: #EEE;
+		}
+
+		.answer.selected {
+			background:rgb(255, 255, 112);
+		}
+
+		.answer .wrapper {
+			margin:20px;
+		}
+
+		.answer .wrapper .table {
+			display: table;
+			width:100%;
+		}
+
+		.answer .text {
+			text-shadow: 2px 2px rgba(0,0,0,0.4);
+			box-shadow: 1px 1px 1px #AAA;
+			font-weight:900;
+			text-align: center;
+			background:#7FD863;
+			height: 90px;
+			font-size: 29px; 
+			font-family: "Helvetica Neue",Arial,Helvetica,sans-serif; 
+			-webkit-font-smoothing: antialiased; 
+			font-smoothing: antialiased;
+			display:table-cell; 
+			vertical-align:middle;
+		}
+
+		.answer .checkbox {
+			height: 20px;
+			width:20px;
+			background:#FFF;
+			float:right;
+			margin:0px 20px 10px 0px;
+			box-shadow: 1px 1px 2px #000;
+			position: relative;
+		}
+		.answer.selected .checkbox:before {
+			color:#000;
+			font-size:40px;
+			content:"\2713\0020";
+			position: absolute;
+			top:-15px;
+			left:-5px;
+		}
+
+		.result {
+			display:none;
+		}
+
+		.result.selected {
+			display:block;
+		}
+		.result .wrapper {
+			padding:50px;
+			border:1px solid #AAA;
+		}
+		.result .wrapper:after {
+		  content: "";
+		  display: table;
+		  clear: both;
+		}
+		.result .title {
+			margin-bottom:20px;
+		}
+		.result .mainImage {
+			float:left;
+			margin-right: 30px;
+		}
+		.result p {
+			line-height: 1.5em;
+			margin:0px;
+		}
+
+
+	</style>
+
+
+<div align="center"><a href="index.html"><img src="images/logo.png" alt="pokemanz"></a></div>
+
+<script id="quiz_template" type="text/x-handlebars-template">
+	<div class="quiz">
+		<div class="questions">
+			{{{outlet 'questions'}}}
+		</div>
+		<div class="results">
+			{{{outlet 'results'}}}
+		</div>
+	</div>
+</script>
+
+
+<script id="question_template" type="text/x-handlebars-template">
+	<div class="question" >
+		<h1 style="background:{{color}}">{{{title}}}</h1>
+		<div class="answers">
+				{{{outlet 'answers'}}}
+		</div>
+	</div>
+</script>
+
+<script id="answer_template" type="text/x-handlebars-template">
+	
+	<div class="answer {{#if selected}}selected{{/if}}" >
+		<div class="wrapper">
+		<div class="table">
+			<div class="text" style="background:{{parent.color}}">
+				{{text}}
+			</div>
+		</div>
+		</div>
+		<div class="footer">
+			<div class="checkbox"></div>
+		</div>
+	</div>
+	
+</script>
+
+<script id="result_template" type="text/x-handlebars-template">
+		<div class="result {{#if selected}}selected{{/if}}" >
+			<div class="wrapper">
+				<div class="title">{{parent.title}}</div>
+				<p>{{text}}</p>
+			</div>
+		</div>
+</script>
+
+
+<script type="text/javascript" src="PersonalityQuizzer.js"></script>
+
+<script type="text/javascript">
+
+	var quiz = new PersonalityQuizzer();
+	quiz.set("title","¿Qué pokémon inicial clásico eres?")
+	quiz.addQuestion({ 
+		color: "#7FD863",
+		title: "¿En donde te gustaría vivir?",
+		answers: [
+			{ 
+				text: "En un bosque.",
+				result: 1
+			},
+			{ 
+				text: "En un lugar cálido.",
+				result: 3
+			},
+{ 
+				text: "En la ciudad.",
+				result: 4
+			},
+{ 
+				text: "Cerca de la playa o un lago.",
+				result: 2
+			},
+		]
+	});
+	quiz.addQuestion({ 
+		color: "#63D8B3",
+		title: "¿Sabes nadar?",
+		answers: [
+			{ 
+				text: "Sí, sé nadar muy bien.",
+				result: 2
+			},
+			{ 
+				text: "Sé nadar, pero no soy experto.",
+				result: [1,4]
+			},
+			{ 
+				text: "Nado como un ladrillo.",
+				result: 3
+			},
+		]
+	});
+	quiz.addQuestion({ 
+		color: "#8463D8",
+		title: "¿Cual es tu estación del año preferida?",
+		answers: [
+			{ 
+				text: "Primavera",
+				result: 1
+			},
+			{ 
+				text: "Verano",
+				result: 3
+			},
+			{ 
+				text: "Otoño",
+				result: 4
+
+			},
+				{ 
+				text: "Invierno",
+				result: 2
+			},
+		]
+	});
+	quiz.addQuestion({ 
+		color: "#7FD863",
+		title: "¿Qué tipo de colores prefieres?",
+		answers: [
+			{ 
+				text: "Un color cálido como Rojo o Amarillo.",
+				result: [3,4]
+			},
+			{ 
+				text: "Un color frío como Azúl o Verde.",
+				result: [1,2]
+			},
+
+
+		]
+	});
+	quiz.addQuestion({ 
+		color: "#63D8B3",
+		title: "¿Cual frase es más correcta?",
+		answers: [
+			{ 
+				text: "El mejor ataque es una buena defenza.",
+				result: 2
+			},
+			{ 
+				text: "La mejor defenza es un buen ataque.",
+				result: 3
+			},
+			{ 
+				text: "Lo mejor es contar con un ataque y defenza balanceados.",
+				result: 1
+			},
+			{ 
+				text: "Lo importante es la velocidad, ¡El oponente no sabrá qué lo golpeó!.",
+				result: 4
+			},
+		]
+	});
+	quiz.addQuestion({ 
+		color: "#8463D8",
+		title: "Cuando debes hacer algo...",
+		answers: [
+			{ 
+				text: "Lo haces tan rápido como puedes.",
+				result: [3,4]
+			},
+			{ 
+				text: "Te tomas tu tiempo.",
+				result: [1,2]
+			},
+
+		]
+	});
+
+	quiz.addResults([
+		{
+			id: 1,
+			text: "You're a Number 1"
+},
+		{
+			id: 2,
+			text: "You're a Number 2"
+		},
+{
+			id: 3,
+			text: "You're a Number 3"
+		},
+{
+			id: 4,
+			text: "You're a Number 4"
+		},
+	]);
+
+
+
+
+</script>
+
+
+</body>
+
+</html>
